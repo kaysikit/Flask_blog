@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content%}
+{% if session.name%}
+Вы авторизованы {{ session.name }}
+{% else %}
+Вы не авторизованы <a href="/login">login</a>
+{% endif %}
+<a href="/logout">Выйти</a>
+{% endblock content %}

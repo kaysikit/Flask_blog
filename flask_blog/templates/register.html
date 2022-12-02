@@ -2,8 +2,7 @@
 
 {% block content %}
 <form method="post" action="">
-
-{{ form.hidden_tag() }}
+    {{ form.hidden_tag() }}
     <p>{{ form.login.label }}: {{ form.login() }}</p>
     <p>{{ form.psw.label }}: {{ form.psw() }}</p>
     <p>{{ form.submit() }}</p>
