@@ -15,6 +15,7 @@ import bcrypt
 #     if db:
 #         db.close()
 #         print("[INFO] PostgreSQL connection close")
+
 db.autocommit = True
 
 
@@ -46,5 +47,6 @@ def autenfication_user(login, psw):
 
     return False
 
-def view_users():
+
+def view_all_users():
     return User.select()

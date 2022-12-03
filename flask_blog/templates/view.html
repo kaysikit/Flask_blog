@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!--{% for user in users_list %}-->
-<!--    <h1>{{user}}</h1>-->
-<!--{% endfor %}}-->
+{% for user in users_list %}
+    <li>
+        <em>{{ user.login }}</em> {{ user.date_reg.strftime("%d/%m/%Y") }}
+    </li>
+{% endfor %}
 {% endblock content %}
