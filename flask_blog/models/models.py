@@ -18,4 +18,3 @@ class User(BaseModel):
     class Meta:
         order_by = 'id'
         db_table = 'Users'
-
