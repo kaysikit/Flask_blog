@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
-{% block content%}
-{% if session.name%}
-Вы авторизованы
-{% else %}
-Вы не авторизованы
-{% endif %}
+{% block content %}
+    <div class="container">
+        {% if session.name %}
+            <h1>Вы авторизованы</h1>
+        {% else %}
+            <h1>Вы не авторизованы</h1>
+        {% endif %}
+    </div>
 {% endblock content %}

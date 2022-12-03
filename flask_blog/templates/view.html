@@ -1,9 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for user in users_list %}
-    <li>
-        <em>{{ user.login }}</em> {{ user.date_reg.strftime("%d/%m/%Y") }}
-    </li>
-{% endfor %}
+
+    <div class="container">
+        <h1>Пользователи сайта</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Пользователь</th>
+                <th>Дата регистрации</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users_list %}
+                <tr>
+
+                    <td>
+                        {{ user.login }}
+                    </td>
+                    <td>
+                        {{ user.date_reg.strftime("%d/%m/%Y") }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
 {% endblock content %}
