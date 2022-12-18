@@ -1,9 +1,8 @@
-from flask_blog.db.connect_db import *
-from datetime import datetime, timezone
 from flask_blog.models.models import *
-import psycopg2
 import bcrypt
 
+# Create tables in PostgreSQL
+# import psycopg2
 # try:
 #     with db:
 #         db.create_tables([User])
@@ -19,9 +18,8 @@ import bcrypt
 db.autocommit = True
 
 
-def add_user(login, psw):
+def add_user(login, psw) -> bool:
     user_exist = True
-    dt = datetime.datetime.now(timezone.utc)
     try:
         check_user = User.select().where(User.login == login)
         if check_user:
@@ -30,13 +28,13 @@ def add_user(login, psw):
         user_exist = False
 
     if user_exist:
-        row = User(login=login, password=psw, date_reg=dt)
+        row = User(login=login, password=psw)
         row.save()
         return True
     return False
 
 
-def autenfication_user(login, psw):
+def autenfication_user(login, psw) -> bool:
     try:
         check_password = User.get(User.login == login)
         salt = check_password.password.encode()
@@ -49,4 +47,32 @@ def autenfication_user(login, psw):
 
 
 def view_all_users():
-    return User.select()
+    return User.select(User.login, User.date_reg)
+
+
+def view_profile(login):
+    return User.select().where(User.login == login)
+
+
+def replace_pass(login, new_psw1) -> bool:
+    try:
+        user = User.get(User.login == login)
+        user.password = new_psw1
+        user.save()
+        return True
+    except Exception as ex:
+        print(ex)
+
+    return False
+
+
+def replace_avatar(login, filename) -> bool:
+    try:
+        user = User.get(User.login == login)
+        user.avatar = 'img/users/' + filename
+        user.save()
+        return True
+    except Exception as ex:
+        print(ex)
+
+    return False

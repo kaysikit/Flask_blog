@@ -7,7 +7,8 @@ _basedir = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = True
 SECRET_KEY = os.getenv('SECRET_KEY')
-host = os.getenv('HOST')
-user = os.getenv('USER')
-password = os.getenv('PASSWORD')
-db_name = os.getenv('DB_NAME')
+DB_HOST = os.getenv('DB_HOST')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_NAME = os.getenv('DB_NAME')
+ALLOWED_EXTENSION = set(['png', 'jpg', 'jpeg'])

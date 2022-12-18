@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                {% for user in user_list %}
+                    <img class="avatar" src="{{ url_for('static', filename= user.avatar ) }}" alt="avatar"/>
+                {% endfor %}
+                <form action="/upload_avatar" method="post" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <input type="file" name="file">
+                    <input type="submit" value="Загрузить">
+                </form>
+            </div>
+            <div class="col-sm-8">
+                <ul>
+                    {% for user in user_list %}
+                        <li>{{ user.login }}</li>
+                        <li>{{ user.date_reg }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        {% for cat, msg in get_flashed_messages(True) %}
+            <div class="flash {{ cat }}">{{ msg }}</div>
+        {% endfor %}
+        <form method="post" action="">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.psw_old.label(value="Пароль") }}
+                {{ form.psw_old(class='form-control', placeholder='Введите старый пароль') }}
+            </div>
+            <div class="form-group">
+                {{ form.new_psw1.label }}
+                {{ form.new_psw1(class='form-control', placeholder='Введите новый пароль') }}
+            </div>
+            <div class="form-group">
+                {{ form.new_psw2.label }}
+                {{ form.new_psw2(class='form-control', placeholder='Повторите новый пароль') }}
+            </div>
+            <p>{{ form.submit(class="bg-success text-white") }}</p>
+        </form>
+    </div>
+{% endblock %}

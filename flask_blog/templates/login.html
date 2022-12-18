@@ -2,6 +2,9 @@
 
 {% block content %}
     <div class="container">
+        {% for cat, msg in get_flashed_messages(True) %}
+            <div class="flash {{ cat }}">{{ msg }}</div>
+        {% endfor %}
         <form method="post" action="/login">
             {{ form.hidden_tag() }}
             <div class="form-group">

@@ -182,8 +182,8 @@ email = ["email-validator"]
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.11"
-content-hash = "26f05bf5c2c636833a10c4e7ca3e22ded33e6d7e814d43db4bb63d0be73ee0fd"
+python-versions = "^3.10"
+content-hash = "54e3b246e8469b4786ee99038ebad9a4f2007715e150ed7039730f70ad3fdce1"
 
 [metadata.files]
 bcrypt = [
