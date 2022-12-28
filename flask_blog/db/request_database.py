@@ -46,11 +46,11 @@ def autenfication_user(login, psw) -> bool:
     return False
 
 
-def view_all_users():
+def get_all_users():
     return User.select(User.login, User.date_reg)
 
 
-def view_profile(login):
+def get_profile(login):
     return User.select().where(User.login == login)
 
 

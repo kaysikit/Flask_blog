@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for, session, request, flash
 from werkzeug.utils import secure_filename
 
 from config import ALLOWED_EXTENSION
-from flask_blog.db.request_database import add_user, autenfication_user, view_all_users, view_profile, replace_pass, \
+from flask_blog.db.request_database import add_user, autenfication_user, get_all_users, get_profile, replace_pass, \
     replace_avatar
 from flask_blog.forms.forms import RegistrationForm, LoginForm, ReplacePasswordForm
 
@@ -57,7 +57,7 @@ class AuthorizationController:
 class UsersController:
     @check_auth
     def view():
-        users = view_all_users()
+        users = get_all_users()
         users_list = []
         for user in users:
             users_list.append({
@@ -73,7 +73,7 @@ class UsersController:
 
     @check_auth
     def profile():
-        user = view_profile(session.get("name"))
+        user = get_profile(session.get("name"))
         user_list = []
         for item in user:
             user_list.append({
