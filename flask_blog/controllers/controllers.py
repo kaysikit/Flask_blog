@@ -27,10 +27,10 @@ class RegistrationController:
             if form.validate_on_submit():
                 res = add_user(form.login.data, bcrypt.hashpw(form.psw.data.encode(), bcrypt.gensalt(14)))
                 if res:
-                    flash('Регистрация прошла успешно', category='success')
+                    flash('Registration was successful', category='success')
                     return redirect(url_for('view.login'))
                 else:
-                    flash('Что-то пошло не так, попробуйте ещё раз', category='error')
+                    flash('Something went wrong, try again', category='error')
                     return redirect(url_for('view.register'))
         else:
             return redirect(url_for('view.main'))
@@ -47,7 +47,7 @@ class AuthorizationController:
                     session["name"] = form.login.data
                     return redirect(url_for('view.main'))
                 else:
-                    flash('Неправильно введён логин или пароль', category='error')
+                    flash('Login or password entered incorrectly', category='error')
                     return redirect(url_for('view.login'))
         else:
             return redirect(url_for('view.main'))
@@ -89,15 +89,15 @@ class UsersController:
 
     def replace_psw(self, form):
         if not autenfication_user(self, form.psw_old.data.encode()):
-            flash('Неверно введён старый пароль', category='error')
+            flash('The old password was entered incorrectly', category='error')
             return redirect(url_for('view.profile'))
         else:
             res = replace_pass(self, bcrypt.hashpw(form.new_psw1.data.encode(), bcrypt.gensalt(14)))
             if res:
-                flash('Пароль изменён', category='success')
+                flash('Password changed', category='success')
                 return redirect(url_for('view.profile'))
             else:
-                flash('Что-то пошло не так, попробуйте ещё раз', category='error')
+                flash('Something went wrong, try again', category='error')
                 return redirect(url_for('view.profile'))
 
 
@@ -116,5 +116,5 @@ class FilesController:
                 file.save(os.path.join(os.getenv('UPLOAD_FOLDER'), filename))
                 res = replace_avatar(login, filename)
                 if res:
-                    flash('Аватарка изменена', category='success')
+                    flash('Avatar changed', category='success')
                 return redirect(url_for('view.profile'))
