@@ -38,6 +38,6 @@ def profile():
     return UsersController.profile()
 
 
-@view.route('/upload_avatar', methods=['POST', 'GET'])
+@view.route('/upload_avatar', methods=['POST'])
 def upload_avatar():
     return FilesController.upload_avatar()
