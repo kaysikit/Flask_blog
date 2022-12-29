@@ -1,6 +1,9 @@
 from flask import render_template, Blueprint
-from flask_blog.controllers.controllers import RegistrationController, AuthorizationController, UsersController, \
-    FilesController
+
+from flask_blog.controllers.authorization import AuthorizationController
+from flask_blog.controllers.files import FilesController
+from flask_blog.controllers.registration import RegistrationController
+from flask_blog.controllers.users import UsersController
 
 view = Blueprint('view', __name__, template_folder='../templates')
 
@@ -35,6 +38,6 @@ def profile():
     return UsersController.profile()
 
 
-@view.route('/upload_avatar', methods=['POST', 'GET'])
+@view.route('/upload_avatar', methods=['POST'])
 def upload_avatar():
     return FilesController.upload_avatar()

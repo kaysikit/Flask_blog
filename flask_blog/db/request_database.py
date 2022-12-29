@@ -40,18 +40,19 @@ def autenfication_user(login, psw) -> bool:
         salt = check_password.password.encode()
         if bcrypt.checkpw(psw, salt):
             return True
-    except Exception as ex:
-        print(ex)
+    finally:
+        if db:
+            db.close()
 
     return False
 
 
-def view_all_users():
+def get_all_users() -> object:
     return User.select(User.login, User.date_reg)
 
 
-def view_profile(login):
-    return User.select().where(User.login == login)
+def get_profile(login: object) -> object:
+    return User.select().where(User.login == login).get()
 
 
 def replace_pass(login, new_psw1) -> bool:
@@ -60,8 +61,9 @@ def replace_pass(login, new_psw1) -> bool:
         user.password = new_psw1
         user.save()
         return True
-    except Exception as ex:
-        print(ex)
+    finally:
+        if db:
+            db.close()
 
     return False
 
@@ -72,7 +74,8 @@ def replace_avatar(login, filename) -> bool:
         user.avatar = 'img/users/' + filename
         user.save()
         return True
-    except Exception as ex:
-        print(ex)
+    finally:
+        if db:
+            db.close()
 
     return False
