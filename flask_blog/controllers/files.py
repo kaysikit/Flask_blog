@@ -3,6 +3,7 @@ from werkzeug.utils import secure_filename
 from config import ALLOWED_EXTENSION
 import os
 
+from flask_blog.controllers.users import check_auth
 from flask_blog.db.request_database import replace_avatar
 
 

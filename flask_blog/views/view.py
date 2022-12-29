@@ -1,9 +1,9 @@
 from flask import render_template, Blueprint
 
-from flask_blog.controllers.authorizationcontroller import AuthorizationController
-from flask_blog.controllers.filescontroller import FilesController
-from flask_blog.controllers.registrationcontroller import RegistrationController
-from flask_blog.controllers.userscontroller import UsersController
+from flask_blog.controllers.authorization import AuthorizationController
+from flask_blog.controllers.files import FilesController
+from flask_blog.controllers.registration import RegistrationController
+from flask_blog.controllers.users import UsersController
 
 view = Blueprint('view', __name__, template_folder='../templates')
 

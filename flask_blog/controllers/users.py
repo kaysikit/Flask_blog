@@ -48,6 +48,7 @@ class UsersController:
             UsersController.replace_psw(login, form)
         return render_template('profile.html', user_list=user_list, form=form)
 
+    @check_auth
     def replace_psw(self, form):
         if not autenfication_user(self, form.psw_old.data.encode()):
             flash('The old password was entered incorrectly', category='error')
