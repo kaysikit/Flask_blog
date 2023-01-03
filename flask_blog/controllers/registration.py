@@ -10,13 +10,16 @@ class RegistrationController:
         if not session.get("name"):
             form = RegistrationForm()
             if form.validate_on_submit():
-                res = add_user(form.login.data, bcrypt.hashpw(form.psw.data.encode(), bcrypt.gensalt(14)))
+                res = add_user(
+                    form.login.data,
+                    bcrypt.hashpw(form.psw.data.encode(), bcrypt.gensalt(14)),
+                )
                 if res:
-                    flash('Registration was successful', category='success')
-                    return redirect(url_for('view.login'))
+                    flash("Registration was successful", category="success")
+                    return redirect(url_for("view.login"))
                 else:
-                    flash('Something went wrong, try again', category='error')
-                    return redirect(url_for('view.register'))
+                    flash("Something went wrong, try again", category="error")
+                    return redirect(url_for("view.register"))
         else:
-            return redirect(url_for('view.main'))
+            return redirect(url_for("view.main"))
         return render_template("register.html", form=form)

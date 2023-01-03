@@ -12,10 +12,10 @@ class AuthorizationController:
                 res = autenfication_user(form.login.data, form.psw.data.encode())
                 if res:
                     session["name"] = form.login.data
-                    return redirect(url_for('view.main'))
+                    return redirect(url_for("view.main"))
                 else:
-                    flash('Login or password entered incorrectly', category='error')
-                    return redirect(url_for('view.login'))
+                    flash("Login or password entered incorrectly", category="error")
+                    return redirect(url_for("view.login"))
         else:
-            return redirect(url_for('view.main'))
+            return redirect(url_for("view.main"))
         return render_template("login.html", form=form)

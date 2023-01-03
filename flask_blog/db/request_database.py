@@ -71,7 +71,7 @@ def replace_pass(login, new_psw1) -> bool:
 def replace_avatar(login, filename) -> bool:
     try:
         user = User.get(User.login == login)
-        user.avatar = 'img/users/' + filename
+        user.avatar = "img/users/" + filename
         user.save()
         return True
     finally:

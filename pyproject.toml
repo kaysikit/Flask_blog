@@ -17,6 +17,7 @@ bcrypt = "4.0.1"
 wtforms = "3.0.1"
 flask-wtf = "1.0.1"
 flask-session = "0.4.0"
+black = {git = "https://github.com/psf/black"}
 
 
 [build-system]
