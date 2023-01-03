@@ -52,7 +52,7 @@ def get_all_users() -> object:
 
 
 def get_profile(login: object) -> object:
-    return User.select().where(User.login == login).get()
+    return User.select().where(User.login == login)
 
 
 def replace_pass(login, new_psw1) -> bool:
