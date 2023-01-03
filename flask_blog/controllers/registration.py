@@ -12,7 +12,7 @@ class RegistrationController:
             if form.validate_on_submit():
                 res = add_user(
                     form.login.data,
-                    bcrypt.hashpw(form.psw.data.encode(), bcrypt.gensalt(14)),
+                    bcrypt.hashpw(form.password.data.encode(), bcrypt.gensalt(14)),
                 )
                 if res:
                     flash("Registration was successful", category="success")

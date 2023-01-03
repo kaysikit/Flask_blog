@@ -50,12 +50,12 @@ class UsersController:
 
     @check_auth
     def replace_psw(self, form):
-        if not autenfication_user(self, form.psw_old.data.encode()):
+        if not autenfication_user(self, form.password_old.data.encode()):
             flash("The old password was entered incorrectly", category="error")
             return redirect(url_for("view.profile"))
         else:
             res = replace_pass(
-                self, bcrypt.hashpw(form.new_psw1.data.encode(), bcrypt.gensalt(14))
+                self, bcrypt.hashpw(form.new_password1.data.encode(), bcrypt.gensalt(14))
             )
             if res:
                 flash("Password changed", category="success")
