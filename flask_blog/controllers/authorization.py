@@ -9,7 +9,7 @@ class AuthorizationController:
         if not session.get("name"):
             form = LoginForm()
             if form.validate_on_submit():
-                res = autenfication_user(form.login.data, form.psw.data.encode())
+                res = autenfication_user(form.login.data, form.password.data.encode())
                 if res:
                     session["name"] = form.login.data
                     return redirect(url_for("view.main"))

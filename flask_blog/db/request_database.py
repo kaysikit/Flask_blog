@@ -1,19 +1,6 @@
 from flask_blog.models.models import *
 import bcrypt
-
-# Create tables in PostgreSQL
-# import psycopg2
-# try:
-#     with db:
-#         db.create_tables([User])
-#
-# except Exception as ex:
-#     print("[INFO] Error while working with PostgreSQL", ex)
-#
-# finally:
-#     if db:
-#         db.close()
-#         print("[INFO] PostgreSQL connection close")
+import datetime
 
 db.autocommit = True
 
@@ -48,7 +35,7 @@ def autenfication_user(login, psw) -> bool:
 
 
 def get_all_users() -> object:
-    return User.select(User.login, User.date_reg)
+    return User.select(User.login, User.create_at)
 
 
 def get_profile(login: object) -> object:
@@ -59,6 +46,7 @@ def replace_pass(login, new_psw1) -> bool:
     try:
         user = User.get(User.login == login)
         user.password = new_psw1
+        user.update_at = datetime.datetime.now()
         user.save()
         return True
     finally:
@@ -72,6 +60,7 @@ def replace_avatar(login, filename) -> bool:
     try:
         user = User.get(User.login == login)
         user.avatar = "img/users/" + filename
+        user.update_at = datetime.datetime.now()
         user.save()
         return True
     finally:
