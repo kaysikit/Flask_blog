@@ -14,11 +14,13 @@ class BaseModel(Model):
 
 
 class User(BaseModel):
-    id = PrimaryKeyField(unique=True)
-    login = CharField()
+    login = TextField()
     password = CharField()
-    date_reg = DateField(default=datetime.datetime.now)
+    create_at = DateTimeField(default=datetime.datetime.now)
+    update_at = DateTimeField(default=datetime.datetime.now)
+    deleted_at = TextField(null=True)
     avatar = CharField(default="img/default/avatar.png")
+
 
     class Meta:
         order_by = "id"

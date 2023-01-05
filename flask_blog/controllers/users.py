@@ -24,10 +24,7 @@ class UsersController:
     @check_auth
     def view():
         users = get_all_users()
-        users_list = []
-        for user in users:
-            users_list.append({"login": user.login, "date_reg": user.date_reg})
-        return render_template("view.html", users_list=users_list)
+        return render_template("view.html", users_list=users)
 
     @check_auth
     def logout():
@@ -37,16 +34,11 @@ class UsersController:
     @check_auth
     def profile():
         user = get_profile(session.get("name"))
-        user_list = []
-        for item in user:
-            user_list.append(
-                {"login": item.login, "date_reg": item.date_reg, "avatar": item.avatar}
-            )
         form = ReplacePasswordForm()
         login = session.get("name")
         if form.validate_on_submit():
             UsersController.replace_psw(login, form)
-        return render_template("profile.html", user_list=user_list, form=form)
+        return render_template("profile.html", user_list=user, form=form)
 
     @check_auth
     def replace_psw(self, form):

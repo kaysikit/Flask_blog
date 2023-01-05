@@ -71,7 +71,7 @@ class ReplacePasswordForm(FlaskForm):
                 max=100,
             ),
             EqualTo(
-                "new_psw1",
+                "new_password1",
                 message="Passwords must match",
             ),
         ],

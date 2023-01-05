@@ -16,7 +16,9 @@
                 <ul>
                     {% for user in user_list %}
                         <li>{{ user.login }}</li>
-                        <li>{{ user.date_reg }}</li>
+                        <li>Registered {{ user.create_at.strftime("%d.%m.%Y") }}</li>
+                        <li>Last update {{ user.update_at.strftime("%d.%m.%Y") }}
+                            in {{ user.update_at.strftime("%H:%M") }}</li>
                     {% endfor %}
                 </ul>
             </div>
@@ -26,19 +28,19 @@
         {% for cat, msg in get_flashed_messages(True) %}
             <div class="flash {{ cat }}">{{ msg }}</div>
         {% endfor %}
-        <form method="post" action="">
+        <form method="post" action="/profile">
             {{ form.hidden_tag() }}
             <div class="form-group">
-                {{ form.password_old.label(value="Пароль") }}
-                {{ form.password_old(class='form-control', placeholder='Введите старый пароль') }}
+                {{ form.password_old.label }}
+                {{ form.password_old(class='form-control', placeholder='Enter the old password') }}
             </div>
             <div class="form-group">
                 {{ form.new_password1.label }}
-                {{ form.new_password1(class='form-control', placeholder='Введите новый пароль') }}
+                {{ form.new_password1(class='form-control', placeholder='Enter a new password') }}
             </div>
             <div class="form-group">
                 {{ form.new_password2.label }}
-                {{ form.new_password2(class='form-control', placeholder='Повторите новый пароль') }}
+                {{ form.new_password2(class='form-control', placeholder='Repeat the new password') }}
             </div>
             <p>{{ form.submit(class="bg-success text-white") }}</p>
         </form>
