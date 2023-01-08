@@ -55,10 +55,11 @@ class User(BaseModel):
     def get_all() -> object:
         return User.select(User.login, User.create_at)
 
-    #
+    #Getting an authorized user
     def get_profile(self: object) -> object:
         return User.select().where(User.login == self).get()
 
+    #Updating the user's password
     def update_password(self, new_psw1) -> bool:
         try:
             user = User.get(User.login == self)
@@ -72,7 +73,8 @@ class User(BaseModel):
 
         return False
 
-    def replace_avatar(self, filename) -> bool:
+    #Updating the user's avatar
+    def update_avatar(self, filename) -> bool:
         try:
             user = User.get(User.login == self)
             user.avatar = "img/users/" + filename

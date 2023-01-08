@@ -29,7 +29,7 @@ class FilesController:
                     str(uuid.uuid4()) + "." + file.filename.rsplit(".", 1)[1].lower()
                 )
                 file.save(os.path.join(UPLOAD_FOLDER, filename))
-                res = User.replace_avatar(login, filename)
+                res = User.update_avatar(login, filename)
                 if res:
                     flash("Avatar changed", category="success")
             else:
