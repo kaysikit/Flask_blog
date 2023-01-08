@@ -32,11 +32,11 @@ class UsersController:
         form = ReplacePasswordForm()
         login = session.get("name")
         if form.validate_on_submit():
-            UsersController.replace_psw(login, form)
+            UsersController.update_password(login, form)
         return render_template("profile.html", user=user, form=form)
 
     @check_auth
-    def replace_psw(self, form):
+    def update_password(self, form):
         if not User.autenfication(self, form.password_old.data.encode()):
             flash("The old password was entered incorrectly", category="error")
             return redirect(url_for("view.profile"))

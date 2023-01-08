@@ -26,7 +26,7 @@ class User(BaseModel):
     def new(self, password) -> bool:
         user_exist = True
         try:
-            check_user = User.select().where(User.login == self)
+            check_user = User.select(User.login).where(User.login == self).get()
             if check_user:
                 user_exist = False
         except DoesNotExist as de:
@@ -39,11 +39,11 @@ class User(BaseModel):
         return False
 
     #User authorization
-    def autenfication(self, psw) -> bool:
+    def autenfication(self, password) -> bool:
         try:
             check_password = User.get(User.login == self)
             salt = check_password.password.encode()
-            if bcrypt.checkpw(psw, salt):
+            if bcrypt.checkpw(password, salt):
                 return True
         finally:
             if db:
@@ -56,14 +56,20 @@ class User(BaseModel):
         return User.select(User.login, User.create_at)
 
     #Getting an authorized user
-    def get_profile(self: object) -> object:
-        return User.select().where(User.login == self).get()
+    def get_profile(self) -> object:
+        return User.select(
+            User.login,
+            User.create_at,
+            User.avatar,
+            User.update_at,
+            User.deleted_at,
+        ).where(User.login == self).get()
 
     #Updating the user's password
-    def update_password(self, new_psw1) -> bool:
+    def update_password(self, new_password1) -> bool:
         try:
             user = User.get(User.login == self)
-            user.password = new_psw1
+            user.password = new_password1
             user.update_at = datetime.datetime.now()
             user.save()
             return True
