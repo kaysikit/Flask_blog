@@ -14,7 +14,7 @@ class BaseForm(FlaskForm):
                 message="The login must contain at least %(min)d characters",
             ),
             Regexp(
-                '[a-zA-Z0-9]',
+                "[a-zA-Z0-9]",
                 message="Valid characters [a-z], [A-Z], [0-9]",
             ),
         ],
@@ -48,8 +48,8 @@ class ReplacePasswordForm(FlaskForm):
             Length(
                 min=8,
                 max=100,
-            )
-        ]
+            ),
+        ],
     )
     new_password1 = PasswordField(
         "New password: ",

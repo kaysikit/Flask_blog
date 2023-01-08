@@ -6,7 +6,7 @@ from flask import redirect, url_for, session, request, flash
 
 from config import UPLOAD_FOLDER
 from flask_blog.controllers.users import check_auth
-from flask_blog.db.request_database import replace_avatar
+from flask_blog.models.models import User
 
 
 class FilesController:
@@ -29,7 +29,7 @@ class FilesController:
                     str(uuid.uuid4()) + "." + file.filename.rsplit(".", 1)[1].lower()
                 )
                 file.save(os.path.join(UPLOAD_FOLDER, filename))
-                res = replace_avatar(login, filename)
+                res = User.update_avatar(login, filename)
                 if res:
                     flash("Avatar changed", category="success")
             else:
