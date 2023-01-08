@@ -1,8 +1,8 @@
 from flask import render_template, redirect, url_for, session, flash
-
-from flask_blog.db.request_database import add_user
-from flask_blog.forms.forms import RegistrationForm
 import bcrypt
+
+from flask_blog.forms.forms import RegistrationForm
+from flask_blog.models.models import User
 
 
 class RegistrationController:
@@ -10,7 +10,7 @@ class RegistrationController:
         if not session.get("name"):
             form = RegistrationForm()
             if form.validate_on_submit():
-                res = add_user(
+                res = User.new(
                     form.login.data,
                     bcrypt.hashpw(form.password.data.encode(), bcrypt.gensalt(14)),
                 )

@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, session, flash
 
-from flask_blog.db.request_database import autenfication_user
+from flask_blog.models.models import User
 from flask_blog.forms.forms import LoginForm
 
 
@@ -9,7 +9,7 @@ class AuthorizationController:
         if not session.get("name"):
             form = LoginForm()
             if form.validate_on_submit():
-                res = autenfication_user(form.login.data, form.password.data.encode())
+                res = User.autenfication(form.login.data, form.password.data.encode())
                 if res:
                     session["name"] = form.login.data
                     return redirect(url_for("view.main"))
