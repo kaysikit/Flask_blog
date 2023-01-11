@@ -20,6 +20,7 @@ class RegistrationController:
                 else:
                     flash("Something went wrong, try again", category="error")
                     return redirect(url_for("view.register"))
+
         else:
             return redirect(url_for("view.main"))
         return render_template("register.html", form=form)

@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for, session, flash
 import bcrypt
+from playhouse.flask_utils import object_list
 
 from flask_blog.models.models import User
 from flask_blog.forms.forms import ReplacePasswordForm
@@ -19,7 +20,13 @@ class UsersController:
     @check_auth
     def view():
         users = User.get_all()
-        return render_template("view.html", users_list=users)
+        return object_list(
+            'view.html',
+            query=users,
+            context_variable='user_list',
+            paginate_by=10,
+            page_var='page',
+        )
 
     @check_auth
     def logout():

@@ -28,7 +28,7 @@ def logout():
     return UsersController.logout()
 
 
-@view.route("/view")
+@view.route("/view/", methods=["GET"])
 def view_users():
     return UsersController.view()
 

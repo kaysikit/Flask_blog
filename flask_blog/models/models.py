@@ -21,12 +21,13 @@ class User(BaseModel):
     update_at = DateTimeField(default=datetime.datetime.now)
     deleted_at = TextField(null=True)
     avatar = CharField(default="img/default/avatar.png")
+    db.autocommit = True
 
     # Create new user
     def new(self, password) -> bool:
         user_exist = True
         try:
-            check_user = User.select(User.login).where(User.login == self).get()
+            check_user = User.select(User.login).where(User.login == self)
             if check_user:
                 user_exist = False
         except DoesNotExist as de:
@@ -45,6 +46,8 @@ class User(BaseModel):
             salt = check_password.password.encode()
             if bcrypt.checkpw(password, salt):
                 return True
+        except DoesNotExist as ex:
+            return False
         finally:
             if db:
                 db.close()
@@ -94,5 +97,4 @@ class User(BaseModel):
         return False
 
     class Meta:
-        order_by = "id"
         db_table = "Users"
