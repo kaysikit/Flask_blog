@@ -1,36 +1,79 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import ValidationError, DataRequired, Length, EqualTo
+from wtforms.validators import DataRequired, Length, EqualTo, Regexp
 
 
 class BaseForm(FlaskForm):
-    login = StringField("Логин: ", validators=[DataRequired(), Length(min=6, max=30,
-                                                                      message='Логин должен содержать не менее %(min)d символов')])
-    psw = PasswordField("Пароль: ", validators=[DataRequired(), Length(min=8, max=100,
-                                                                       message='Пароль должен содержать не менее %(min)d символов')])
-
-    def validate_login(self, login):
-        excluded_chars = " *?!'^+%&;/()=}][{$#"
-        for char in self.login.data:
-            if char in excluded_chars:
-                raise ValidationError(
-                    f"Символ {char} недопустим в логине"
-                )
+    login = StringField(
+        "Login: ",
+        validators=[
+            DataRequired(),
+            Length(
+                min=6,
+                max=30,
+                message="The login must contain at least %(min)d characters",
+            ),
+            Regexp(
+                "[a-zA-Z0-9]",
+                message="Valid characters [a-z], [A-Z], [0-9]",
+            ),
+        ],
+    )
+    password = PasswordField(
+        "Password: ",
+        validators=[
+            DataRequired(),
+            Length(
+                min=8,
+                max=100,
+                message="The password must contain at least %(min)d characters",
+            ),
+        ],
+    )
 
 
 class RegistrationForm(BaseForm):
-    submit = SubmitField("Регистрация")
+    submit = SubmitField("Registration")
 
 
 class LoginForm(BaseForm):
-    submit = SubmitField("Авторизация")
+    submit = SubmitField("Authorization")
 
 
 class ReplacePasswordForm(FlaskForm):
-    psw_old = PasswordField("Старый пароль: ", validators=[DataRequired(), Length(min=8, max=100)])
-    new_psw1 = PasswordField("Новый пароль: ", validators=[DataRequired(), Length(min=8, max=100,
-                                                                                  message='Пароль должен содержать не менее %(min)d символов')])
-    new_psw2 = PasswordField("Повторить пароль: ",
-                             validators=[DataRequired(), Length(min=8, max=100),
-                                         EqualTo('new_psw1', message='Пароли должны совпадать')])
-    submit = SubmitField("Изменить пароль")
+    password_old = PasswordField(
+        "Old password: ",
+        validators=[
+            DataRequired(),
+            Length(
+                min=8,
+                max=100,
+            ),
+        ],
+    )
+    new_password1 = PasswordField(
+        "New password: ",
+        validators=[
+            DataRequired(),
+            Length(
+                min=8,
+                max=100,
+                message="The password must contain at least %(min)d characters",
+            ),
+        ],
+    )
+    new_password2 = PasswordField(
+        "Repeat password: ",
+        validators=[
+            DataRequired(),
+            Length(
+                min=8,
+                max=100,
+            ),
+            EqualTo(
+                "new_password1",
+                message="Passwords must match",
+            ),
+        ],
+    )
+    submit = SubmitField("Change Password")

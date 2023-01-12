@@ -3,44 +3,42 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                {% for user in user_list %}
-                    <img class="avatar" src="{{ url_for('static', filename= user.avatar ) }}" alt="avatar"/>
-                {% endfor %}
+                <img class="avatar" src="{{ url_for('static', filename= user.avatar ) }}" alt="avatar"/>
                 <form action="/upload_avatar" method="post" enctype="multipart/form-data">
                     {{ form.hidden_tag() }}
                     <input type="file" name="file">
-                    <input type="submit" value="Загрузить">
+                    <input type="submit" class="btn btn-success" value="Upload">
                 </form>
             </div>
             <div class="col-sm-8">
                 <ul>
-                    {% for user in user_list %}
-                        <li>{{ user.login }}</li>
-                        <li>{{ user.date_reg }}</li>
-                    {% endfor %}
+                    <li>{{ user.login }}</li>
+                    <li>Registered {{ user.create_at.strftime("%d.%m.%Y") }}</li>
+                    <li>Last update {{ user.update_at.strftime("%d.%m.%Y") }}
+                        in {{ user.update_at.strftime("%H:%M") }}</li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="container">
-        {% for cat, msg in get_flashed_messages(True) %}
-            <div class="flash {{ cat }}">{{ msg }}</div>
+        {% for type_message, message in get_flashed_messages(True) %}
+            <div class="flash {{ type_message }}">{{ message }}</div>
         {% endfor %}
-        <form method="post" action="">
+        <form method="post" action="/profile">
             {{ form.hidden_tag() }}
             <div class="form-group">
-                {{ form.psw_old.label(value="Пароль") }}
-                {{ form.psw_old(class='form-control', placeholder='Введите старый пароль') }}
+                {{ form.password_old.label }}
+                {{ form.password_old(class='form-control', placeholder='Enter the old password') }}
             </div>
             <div class="form-group">
-                {{ form.new_psw1.label }}
-                {{ form.new_psw1(class='form-control', placeholder='Введите новый пароль') }}
+                {{ form.new_password1.label }}
+                {{ form.new_password1(class='form-control', placeholder='Enter a new password') }}
             </div>
             <div class="form-group">
-                {{ form.new_psw2.label }}
-                {{ form.new_psw2(class='form-control', placeholder='Повторите новый пароль') }}
+                {{ form.new_password2.label }}
+                {{ form.new_password2(class='form-control', placeholder='Repeat the new password') }}
             </div>
-            <p>{{ form.submit(class="bg-success text-white") }}</p>
+            <p>{{ form.submit(class="btn btn-success") }}</p>
         </form>
     </div>
 {% endblock %}

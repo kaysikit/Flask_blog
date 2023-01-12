@@ -3,7 +3,6 @@
   "directory": "migrations",
   "history": "migratehistory",
   "models": [
-    "flask_blog.models.models.User",
-    "flask_blog.models.models.BaseModel"
+    "flask_blog.models.models.User"
   ]
 }

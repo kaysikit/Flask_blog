@@ -9,7 +9,6 @@ snapshot = Snapshot()
 
 @snapshot.append
 class BaseModel(peewee.Model):
-    
     class Meta:
         table_name = "basemodel"
 
@@ -20,8 +19,7 @@ class User(peewee.Model):
     login = CharField(max_length=255)
     password = CharField(max_length=255)
     date_reg = DateField(default=datetime.datetime.now)
-    avatar = CharField(default='img/default/avatar.png', max_length=255)
+    avatar = CharField(default="img/default/avatar.png", max_length=255)
+
     class Meta:
         table_name = "Users"
-
-
