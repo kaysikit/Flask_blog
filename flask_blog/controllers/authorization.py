@@ -5,11 +5,15 @@ from flask_blog.forms.forms import LoginForm
 
 
 class AuthorizationController:
+    @staticmethod
     def call():
         if not session.get("name"):
             form = LoginForm()
             if form.validate_on_submit():
-                res = User.autenfication(form.login.data, form.password.data.encode())
+                res = User.autenfication(
+                    form.login.data,
+                    form.password.data,
+                )
                 if res:
                     session["name"] = form.login.data
                     return redirect(url_for("view.main"))

@@ -1,3 +1,5 @@
+from typing import Optional
+
 import bcrypt
 from peewee import *
 from config import DB_USER, DB_HOST, DB_NAME, DB_PASSWORD
@@ -7,6 +9,7 @@ import datetime
 db = PostgresqlDatabase(
     database=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST
 )
+db.autocommit = True
 
 
 class BaseModel(Model):
@@ -21,80 +24,66 @@ class User(BaseModel):
     update_at = DateTimeField(default=datetime.datetime.now)
     deleted_at = TextField(null=True)
     avatar = CharField(default="img/default/avatar.png")
-    db.autocommit = True
 
     # Create new user
-    def new(self, password) -> bool:
-        user_exist = True
-        try:
-            check_user = User.select(User.login).where(User.login == self)
-            if check_user:
-                user_exist = False
-        except DoesNotExist as de:
-            user_exist = False
-
+    @classmethod
+    def new(cls, login: str, password: str) -> Optional['User']:
+        user_exist = cls.select().where(cls.login == login).exists()
         if user_exist:
-            row = User(login=self, password=password)
-            row.save()
+            return None
+
+        password = bcrypt.hashpw(password.encode(), bcrypt.gensalt(14))
+        user = User(login=login, password=password)
+        user.save()
+        return user
+
+    # User authorization
+    @classmethod
+    def autenfication(cls, login: str, password: str) -> bool | None:
+        user_exist = cls.select().where(cls.login == login).exists()
+        if not user_exist:
+            return None
+
+        password = password.encode()
+        check_password = cls.get(cls.login == login)
+        salt = check_password.password.encode()
+        if bcrypt.checkpw(password, salt):
             return True
-        return False
 
-    #User authorization
-    def autenfication(self, password) -> bool:
-        try:
-            check_password = User.get(User.login == self)
-            salt = check_password.password.encode()
-            if bcrypt.checkpw(password, salt):
-                return True
-        except DoesNotExist as ex:
-            return False
-        finally:
-            if db:
-                db.close()
+    # Getting a list of all users
+    @classmethod
+    def get_all(cls) -> object:
+        return cls.select(cls.login, cls.create_at)
 
-        return False
+    # Getting an authorized user
+    @classmethod
+    def get_profile(cls, login) -> object:
+        return cls.select(
+            cls.login,
+            cls.create_at,
+            cls.avatar,
+            cls.update_at,
+            cls.deleted_at,
+        ).where(cls.login == login).get()
 
-    #Getting a list of all users
-    def get_all() -> object:
-        return User.select(User.login, User.create_at)
+    # Updating the user's password
+    @classmethod
+    def update_password(cls, login: str, new_password1: str) -> Optional['User']:
+        new_password1 = bcrypt.hashpw(new_password1.encode(), bcrypt.gensalt(14))
+        user = cls.get(cls.login == login)
+        user.password = new_password1
+        user.update_at = datetime.datetime.now()
+        user.save()
+        return user
 
-    #Getting an authorized user
-    def get_profile(self) -> object:
-        return User.select(
-            User.login,
-            User.create_at,
-            User.avatar,
-            User.update_at,
-            User.deleted_at,
-        ).where(User.login == self).get()
-
-    #Updating the user's password
-    def update_password(self, new_password1) -> bool:
-        try:
-            user = User.get(User.login == self)
-            user.password = new_password1
-            user.update_at = datetime.datetime.now()
-            user.save()
-            return True
-        finally:
-            if db:
-                db.close()
-
-        return False
-
-    #Updating the user's avatar
-    def update_avatar(self, filename) -> bool:
-        try:
-            user = User.get(User.login == self)
-            user.avatar = "img/users/" + filename
-            user.update_at = datetime.datetime.now()
-            user.save()
-            return True
-        finally:
-            if db:
-                db.close()
-
-        return False
+    # Updating the user's avatar
+    @classmethod
+    def update_avatar(cls, login, filename) -> Optional['User']:
+        user = cls.get(cls.login == login)
+        user.avatar = f"img/users/{filename}"
+        user.update_at = datetime.datetime.now()
+        user.save()
+        return user
 
     class Meta:
         db_table = "Users"

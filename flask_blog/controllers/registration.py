@@ -6,13 +6,14 @@ from flask_blog.models.models import User
 
 
 class RegistrationController:
+    @staticmethod
     def call():
         if not session.get("name"):
             form = RegistrationForm()
             if form.validate_on_submit():
                 res = User.new(
                     form.login.data,
-                    bcrypt.hashpw(form.password.data.encode(), bcrypt.gensalt(14)),
+                    form.password.data,
                 )
                 if res:
                     flash("Registration was successful", category="success")

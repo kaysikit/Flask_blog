@@ -1,5 +1,4 @@
 from flask import render_template, redirect, url_for, session, flash
-import bcrypt
 from playhouse.flask_utils import object_list
 
 from flask_blog.models.models import User
@@ -17,6 +16,7 @@ def check_auth(func):
 
 
 class UsersController:
+    @staticmethod
     @check_auth
     def view():
         users = User.get_all()
@@ -28,11 +28,13 @@ class UsersController:
             page_var='page',
         )
 
+    @staticmethod
     @check_auth
     def logout():
         session["name"] = None
         return redirect(url_for("view.main"))
 
+    @staticmethod
     @check_auth
     def profile():
         user = User.get_profile(session.get("name"))
@@ -42,15 +44,16 @@ class UsersController:
             UsersController.update_password(login, form)
         return render_template("profile.html", user=user, form=form)
 
+    @staticmethod
     @check_auth
-    def update_password(self, form):
-        if not User.autenfication(self, form.password_old.data.encode()):
+    def update_password(login, form):
+        if not User.autenfication(login, form.password_old.data.encode()):
             flash("The old password was entered incorrectly", category="error")
             return redirect(url_for("view.profile"))
         else:
             res = User.update_password(
-                self,
-                bcrypt.hashpw(form.new_password1.data.encode(), bcrypt.gensalt(14)),
+                login,
+                form.new_password1.data,
             )
             if res:
                 flash("Password changed", category="success")
