@@ -19,6 +19,8 @@ class FilesController:
             return True
         return False
 
+
+    @staticmethod
     @check_auth
     def upload_avatar():
         if request.method == "POST":
