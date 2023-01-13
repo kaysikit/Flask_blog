@@ -1,5 +1,4 @@
 from flask import render_template, redirect, url_for, session, flash
-import bcrypt
 
 from flask_blog.forms.forms import RegistrationForm
 from flask_blog.models.models import User
