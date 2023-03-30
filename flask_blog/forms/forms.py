@@ -14,7 +14,7 @@ class BaseForm(FlaskForm):
                 message="The login must contain at least %(min)d characters",
             ),
             Regexp(
-                "[a-zA-Z0-9]",
+                '^\w+$',
                 message="Valid characters [a-z], [A-Z], [0-9]",
             ),
         ],

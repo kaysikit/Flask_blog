@@ -20,6 +20,13 @@ flask-session = "0.4.0"
 black = {git = "https://github.com/psf/black"}
 
 
+[tool.poetry.group.development.dependencies]
+pytest = "7.2.1"
+pytest-flask = "1.2.0"
+responses = "0.22.0"
+coverage = "7.1.0"
+faker = "16.6.1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
