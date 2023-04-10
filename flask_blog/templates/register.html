@@ -5,6 +5,9 @@
         {% for cat, msg in get_flashed_messages(True) %}
             <div class="flash {{ cat }}">{{ msg }}</div>
         {% endfor %}
+        {% for error in form.login.errors %}
+            <div class="flash error">{{ error }}</div>
+        {% endfor%}
         <form method="post" action="/register">
             {{ form.hidden_tag() }}
             <div class="form-group">

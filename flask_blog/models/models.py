@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 
 import bcrypt
@@ -78,7 +79,20 @@ class User(BaseModel):
 
     # Updating the user's avatar
     @classmethod
-    def update_avatar(cls, login, filename) -> Optional['User']:
+    def update_avatar(cls, login: str, filename: str) -> Optional['User']:
+        user = cls.get(cls.login == login)
+        default_avatar = 'img/default/avatar.png'
+        if user.avatar == default_avatar:
+             res = User.replace_avatar(login, filename)
+             return res
+
+        else:
+            os.remove(path=f"{os.getcwd()}/flask_blog/static/{user.avatar}")
+            res = User.replace_avatar(login, filename)
+            return res
+
+    @classmethod
+    def replace_avatar(cls, login: str, filename: str) -> Optional['User']:
         user = cls.get(cls.login == login)
         user.avatar = f"img/users/{filename}"
         user.update_at = datetime.datetime.now()

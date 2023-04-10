@@ -13,9 +13,10 @@ class FilesController:
     def __init__(self, file):
         self.filename = file.filename
 
-    def allowed_file(self):
+    @staticmethod
+    def allowed_file(file):
         allowed_mimetypes = ["image/jpeg", "image/png"]
-        if mimetypes.guess_type(self.filename)[0] in allowed_mimetypes:
+        if mimetypes.guess_type(file.filename)[0] in allowed_mimetypes:
             return True
         return False
 
