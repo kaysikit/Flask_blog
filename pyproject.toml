@@ -11,13 +11,13 @@ python = "^3.10"
 flask = "2.2.2"
 python-dotenv = "0.21.0"
 peewee = "3.15.4"
-peewee-migrations = "0.3.32"
-psycopg2 = "2.9.5"
 bcrypt = "4.0.1"
 wtforms = "3.0.1"
 flask-wtf = "1.0.1"
 flask-session = "0.4.0"
-black = {git = "https://github.com/psf/black"}
+psycopg2-binary = "2.9.6"
+peewee-migrations = "0.3.32"
+black = "23.3.0"
 
 
 [tool.poetry.group.development.dependencies]
