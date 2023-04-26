@@ -1,7 +1,10 @@
 import pytest
+import requests
+import responses
+
 from app import create_app
 from faker import Faker
-from flask import session
+from flask import session, url_for
 
 faker = Faker()
 
@@ -112,5 +115,3 @@ def test_login_random_user_with_incorrect_login(client):
         "password": faker.password(),
     }, follow_redirects=True)
     assert response.request.path == "/login"
-
-
