@@ -16,7 +16,7 @@ class AuthorizationController:
                 )
                 if res:
                     session["name"] = form.login.data
-                    return redirect(url_for("view.main"))
+                    return redirect(url_for("misc.main"))
                 else:
                     flash("Login or password entered incorrectly", category="error")
                     return redirect(url_for("view.login"))

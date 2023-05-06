@@ -32,7 +32,7 @@ class UsersController:
     @check_auth
     def logout():
         session["name"] = None
-        return redirect(url_for("view.main"))
+        return redirect(url_for("misc.main"))
 
     @staticmethod
     @check_auth

@@ -4,7 +4,7 @@ import uuid
 
 from flask import redirect, url_for, session, request, flash
 
-from config import UPLOAD_FOLDER
+from flask_blog.config import UPLOAD_FOLDER
 from flask_blog.controllers.users import check_auth
 from flask_blog.models.models import User
 

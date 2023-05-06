@@ -22,5 +22,5 @@ class RegistrationController:
                     return redirect(url_for("view.register"))
 
         else:
-            return redirect(url_for("view.main"))
+            return redirect(url_for("misc.main"))
         return render_template("register.html", form=form)

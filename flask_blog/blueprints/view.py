@@ -1,3 +1,4 @@
+import requests
 from flask import render_template, Blueprint
 
 from flask_blog.controllers.authorization import AuthorizationController
@@ -6,11 +7,6 @@ from flask_blog.controllers.registration import RegistrationController
 from flask_blog.controllers.users import UsersController
 
 view = Blueprint("view", __name__, template_folder="../templates")
-
-
-@view.route("/")
-def main():
-    return render_template("main.html")
 
 
 @view.route("/register", methods=["POST", "GET"])
