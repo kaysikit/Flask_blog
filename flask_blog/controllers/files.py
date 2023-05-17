@@ -37,4 +37,4 @@ class FilesController:
                     flash("Avatar changed", category="success")
             else:
                 flash("Use png or jpeg format", category="error")
-            return redirect(url_for("view.profile"))
+            return redirect(url_for("user.profile"))

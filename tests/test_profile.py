@@ -1,6 +1,3 @@
-import pytest
-
-
 # Happe cases
 def test_get_profile(client, login, password):
     response = client.post(
@@ -29,3 +26,6 @@ def test_get_profile(client, login, password):
 def test_incorrect_get_profile(client):
     response = client.get("/profile", follow_redirects=True)
     assert response.request.path == "/login"
+
+
+

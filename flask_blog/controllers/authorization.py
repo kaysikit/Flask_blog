@@ -19,7 +19,7 @@ class AuthorizationController:
                     return redirect(url_for("misc.main"))
                 else:
                     flash("Login or password entered incorrectly", category="error")
-                    return redirect(url_for("view.login"))
+                    return redirect(url_for("autenfication.login"))
         else:
-            return redirect(url_for("view.main"))
+            return redirect(url_for("misc.main"))
         return render_template("login.html", form=form)

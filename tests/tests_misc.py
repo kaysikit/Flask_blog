@@ -1,6 +1,3 @@
-import pytest
-
-
 def test_main(client):
     response = client.get("/")
 

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-misc = Blueprint('misc', __name__,template_folder="../templates")
+misc = Blueprint('misc', __name__, template_folder="../templates")
 
 
 @misc.get("/")
