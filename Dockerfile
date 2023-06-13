@@ -1,11 +1,10 @@
 FROM python:3.10
 
-WORKDIR /flask_blog
+WORKDIR /
 
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml poetry.lock /
 
-RUN pip install poetry && \
-    poetry install --no-cache-dir
+RUN pip install poetry
 
 COPY . .
 
