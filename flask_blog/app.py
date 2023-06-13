@@ -9,3 +9,6 @@ def create_app() -> Flask:
     blueprints.init_app(app)
 
     return app
+
+
+create_app().run()
