@@ -4,7 +4,7 @@ import uuid
 
 from flask import redirect, url_for, session, request, flash
 
-from config import UPLOAD_FOLDER
+from flask_blog.config import UPLOAD_FOLDER
 from flask_blog.controllers.users import check_auth
 from flask_blog.models.models import User
 
@@ -37,4 +37,4 @@ class FilesController:
                     flash("Avatar changed", category="success")
             else:
                 flash("Use png or jpeg format", category="error")
-            return redirect(url_for("view.profile"))
+            return redirect(url_for("user.profile"))

@@ -32,7 +32,7 @@ class UsersController:
     @check_auth
     def logout():
         session["name"] = None
-        return redirect(url_for("view.main"))
+        return redirect(url_for("misc.main"))
 
     @staticmethod
     @check_auth
@@ -49,7 +49,7 @@ class UsersController:
     def update_password(login, form):
         if not User.autenfication(login, form.password_old.data.encode()):
             flash("The old password was entered incorrectly", category="error")
-            return redirect(url_for("view.profile"))
+            return redirect(url_for("user.profile"))
         else:
             res = User.update_password(
                 login,
@@ -57,7 +57,7 @@ class UsersController:
             )
             if res:
                 flash("Password changed", category="success")
-                return redirect(url_for("view.profile"))
+                return redirect(url_for("user.profile"))
             else:
                 flash("Something went wrong, try again", category="error")
-                return redirect(url_for("view.profile"))
+                return redirect(url_for("user.profile"))

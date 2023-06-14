@@ -27,10 +27,10 @@
         </table>
         {% for page_num in range(1, pagination.get_page_count() + 1) %}
             {% if pagination.get_page() == page_num %}
-                <a href="{{ url_for('view.view_users') }}?page={{ page_num }}"
+                <a href="{{ url_for('user.view_users') }}?page={{ page_num }}"
                    class="btn btn-primary">{{ page_num }}</a>
             {% else %}
-                <a href="{{ url_for('view.view_users') }}?page={{ page_num }}"
+                <a href="{{ url_for('user.view_users') }}?page={{ page_num }}"
                    class="btn btn-outline-primary">{{ page_num }}</a>
             {% endif %}
         {% endfor %}

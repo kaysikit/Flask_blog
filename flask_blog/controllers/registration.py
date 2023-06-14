@@ -16,11 +16,11 @@ class RegistrationController:
                 )
                 if res:
                     flash("Registration was successful", category="success")
-                    return redirect(url_for("view.login"))
+                    return redirect(url_for("autenfication.login"))
                 else:
                     flash("Something went wrong, try again", category="error")
-                    return redirect(url_for("view.register"))
+                    return redirect(url_for("autenfication.register"))
 
         else:
-            return redirect(url_for("view.main"))
+            return redirect(url_for("misc.main"))
         return render_template("register.html", form=form)

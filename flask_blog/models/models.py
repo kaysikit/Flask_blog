@@ -3,7 +3,7 @@ from typing import Optional
 
 import bcrypt
 from peewee import *
-from config import DB_USER, DB_HOST, DB_NAME, DB_PASSWORD
+from flask_blog.config import DB_USER, DB_HOST, DB_NAME, DB_PASSWORD
 import datetime
 
 # Connect with database PostgreSQL
@@ -100,4 +100,4 @@ class User(BaseModel):
         return user
 
     class Meta:
-        db_table = "Users"
+        table_name = "Users"
