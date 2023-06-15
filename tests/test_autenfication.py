@@ -12,7 +12,7 @@ def test_registration(client, login, password):
 
 def test_auth(client, login, password):
     response = client.post(
-        "login", data={"login": login, "password": password}, follow_redirects=True
+        "/login", data={"login": login, "password": password}, follow_redirects=True
     )
 
     assert response.status_code == 200
@@ -22,7 +22,7 @@ def test_auth(client, login, password):
 
 def test_logout(client, login, password):
     response = client.post(
-        "login", data={"login": login, "password": password}, follow_redirects=True
+        "/login", data={"login": login, "password": password}, follow_redirects=True
     )
 
     assert response.status_code == 200
